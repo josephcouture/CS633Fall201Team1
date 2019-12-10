@@ -1,0 +1,55 @@
+<{% extends "resource_hopper/base.html" %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<h1>Build Teams</h1>
+<form method="post">
+	{% csrf_token %}
+	{{ buildteam | crispy }}
+	<button type="submit">Submit</button>
+	</form>
+
+	<table class="table">
+		  <thead>
+		    <tr>
+		      
+		      <th scope="col">Skill</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Skill Level</th>
+		      <th scope="col">Language</th>
+		      <th scope="col">Timezone</th>
+		      
+		    </tr>
+		  </thead>
+		  <tbody>
+				{% for matched_skill in matched_skills %}
+					<tr>
+						<th scope="row">{{matched_skill.skill_id.skill_name}}</th>
+						<td>{{matched_skill.resource_id.resource_fname}} {{matched_skill.resource_id.resource_lname}}</td>
+						<td>{{matched_skill.resource_skill_level}}</td>
+						<td>{{matched_skill.resource_id.language_id.language_name}}</td>
+						<td>{{matched_skill.resource_id.timezone_id.timezone_name}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+	</table>
+
+
+{{projectteam.resource_id.resource_fname}} {{projectteam.resource_id.resource_lname}}
+
+<h3>Add Resource to Team</h3>
+
+<form method="post">
+{% csrf_token %}
+{{ addresourceteam | crispy }}	
+<button type="submit">Submit</button>
+</form>
+
+{% if success %}
+<div> <i>{{ affectedresource }} has been added to {{ team }} </i></div>
+{% endif %}
+
+
+
+{% endblock content %}

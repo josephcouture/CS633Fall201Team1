@@ -1,0 +1,46 @@
+{% extends "resource_hopper/base.html" %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+	<h1>Teams</h1><br>
+	<table class="table">
+		  <thead>
+		    <tr>
+		      
+		      <th scope="col">Team</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Language</th>
+		      <th scope="col">Timezone</th>
+		      
+		    </tr>
+		  </thead>
+		  <tbody>
+		  		
+				{% for projectteam in projectteams %}
+					<tr>
+						<th scope="row">{{projectteam.project_id.project_description}}</th>
+						<td>{{projectteam.resource_id.resource_fname}} {{projectteam.resource_id.resource_lname}}</td>
+						<td>{{projectteam.resource_id.language_id.language_name}}</td>
+						<td>{{projectteam.resource_id.timezone_id.timezone_name}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+	</table>
+
+
+<hr><br><br>
+
+<h3>Create a New Team</h3>
+<form method="post">
+	{% csrf_token %}
+	{{ addteam | crispy }}
+	<button type="submit">Add Team</button>
+
+{% if newteam %}
+<div> <i>{{ newteam }} added to database</i></div>
+{% endif %}
+
+
+{% endblock content %}
+

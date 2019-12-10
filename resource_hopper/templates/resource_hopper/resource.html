@@ -1,0 +1,50 @@
+<{% extends "resource_hopper/base.html" %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<h1>Manage Resources</h1>
+
+<table class="table">
+	<thead>
+
+<tr>
+	<th style="width: 50%">Create Resource</th>
+	<th style="width: 50%">Set Resource Skills</th>
+</tr>
+	</thead>
+
+<tbody>
+
+	<tr>
+		<td class="align-text-top">
+		<form method="post">
+			{% csrf_token %}
+			{{ resourceform | crispy }}
+			<button type="submit">Add Resource</button>
+			</form>
+		</td>
+
+		<td class="align-text-top">
+		<form method="post">
+			{% csrf_token %}
+			{{ skillform | crispy }}
+			<button type="submit">Set Skill</button>
+			</form>
+		</td>
+	</tr>
+</tbody>
+
+
+
+</table>
+
+{% if resourcefullname %}
+<div> <i>{{ resourcefullname }} added to database</i></div>
+{% endif %}
+
+{% if resource_id %}
+<div> <i>{{ resource_id }} skills updated</i></div>
+{% endif %}
+
+{% endblock content %}
