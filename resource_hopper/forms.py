@@ -49,8 +49,11 @@ class BuildTeam(forms.Form):
 		("5", "CS633 - UX"),
 	)
 	skills = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=SKILLS,label="<h4>Search for Skills</h4>")
+	limit_unassigned = forms.BooleanField(label="Return only unassigned resources",required=False)
 
 class AddTeam(forms.ModelForm):
+
+
 
 	class Meta:
 		model = Project

@@ -63,17 +63,37 @@ def buildteam(request):
 	if request.method == 'POST':
 		form = BuildTeam(request.POST)
 		addresourceteam = AddResourceTeam(request.POST)
-		if form.is_valid():
-			selected_skills = form.cleaned_data['skills']
-			matched_skills = ResourceSkill.objects.none()
-			for d in selected_skills:
 
-				matched_skills = matched_skills | ResourceSkill.objects.filter(skill_id=d)
-			context = {
-				'buildteam': BuildTeam(),
-				'matched_skills': matched_skills,
-				'addresourceteam': AddResourceTeam(),
-			}
+		if form.is_valid():
+			if form.cleaned_data['limit_unassigned'] == False:
+				selected_skills = form.cleaned_data['skills']
+				matched_skills = ResourceSkill.objects.none()
+				for d in selected_skills:
+
+					matched_skills = matched_skills | ResourceSkill.objects.filter(skill_id=d)
+				context = {
+					'buildteam': BuildTeam(),
+					'matched_skills': matched_skills,
+					'addresourceteam': AddResourceTeam(),
+					'limit_unassigned': False
+				}
+				print(form.cleaned_data['limit_unassigned'])
+
+			if form.cleaned_data['limit_unassigned'] == True:
+				selected_skills = form.cleaned_data['skills']
+				matched_skills = ResourceSkill.objects.none()
+				for d in selected_skills:
+					matched_skills = matched_skills | ResourceSkill.objects.filter(skill_id=d)
+				context = {
+					'buildteam': BuildTeam(),
+					'matched_skills': matched_skills,
+					'addresourceteam': AddResourceTeam(),
+					'limit_unassigned': True
+				}
+				#print(form.cleaned_data['limit_unassigned'])
+
+
+
 		if addresourceteam.is_valid():
 			affected_resource = (addresourceteam.cleaned_data['resource_id'])
 			team = (addresourceteam.cleaned_data['project_id'])

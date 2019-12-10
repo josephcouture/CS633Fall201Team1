@@ -26,6 +26,8 @@
 		  </thead>
 		  <tbody>
 				{% for matched_skill in matched_skills %}
+				{% if limit_unassigned == True %}
+				{% if matched_skill.resource_id.resource_onteam == False %}
 					<tr>
 						<th scope="row">{{matched_skill.skill_id.skill_name}}</th>
 						<td>{{matched_skill.resource_id.resource_fname}} {{matched_skill.resource_id.resource_lname}}</td>
@@ -33,6 +35,22 @@
 						<td>{{matched_skill.resource_id.language_id.language_name}}</td>
 						<td>{{matched_skill.resource_id.timezone_id.timezone_name}}</td>
 					</tr>
+					
+				{% endif %}
+				{% endif %}
+
+
+
+				{% if limit_unassigned == False %}
+					<tr>
+						<th scope="row">{{matched_skill.skill_id.skill_name}}</th>
+						<td>{{matched_skill.resource_id.resource_fname}} {{matched_skill.resource_id.resource_lname}}</td>
+						<td>{{matched_skill.resource_skill_level}}</td>
+						<td>{{matched_skill.resource_id.language_id.language_name}}</td>
+						<td>{{matched_skill.resource_id.timezone_id.timezone_name}}</td>
+					</tr>
+				{% endif %}
+
 				{% endfor %}
 			</tbody>
 	</table>
