@@ -26,6 +26,17 @@ class SelectSkill(forms.ModelForm):
 			"resource_skill_level":" Resource Skill Level : To rate resource skills from 1-5 ",
 
 		}
+		SKILL_LEVEL = (
+			('', 'Select a Value'),
+			('1', '1'),
+			('2', '2'),
+			('3', '3'),
+			('4', '4'),
+			('5', '5'),
+				)
+		widgets = {
+			'resource_skill_level': forms.Select(choices=SKILL_LEVEL,attrs={'class': 'form-control'}),
+		}
 
 
 
